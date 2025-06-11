@@ -29,7 +29,6 @@
             height: 0px;
         }
 
-
         /* Modo Noturno */
         body.night-mode {
             background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
@@ -79,8 +78,8 @@
         /* Botão de modo */
         .mode-toggle {
             position: fixed;
-            top: 20px;
-            right: 20px;
+            top: 5px;
+            right: 5px;
             background: rgba(255, 255, 255, 0.2);
             border: none;
             border-radius: 50px;
@@ -183,8 +182,8 @@
         .photo-frame {
             width: 400px;
             height: 500px;
-            padding-top: 10px;
-            border-radius: 20px;
+            padding-top: 5px;
+            border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
             position: relative;
@@ -199,13 +198,14 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border: 5px;
+            padding: 5px;
         }
 
         .photo-placeholder {
             color: #999;
             font-size: 1.1rem;
             text-align: center;
-            padding: 20px;
         }
 
         /* Seção do texto */
@@ -325,22 +325,23 @@
         }
 
         .carousel-container {
+            width: 100%;
             max-width: 600px;
-            max-height: 600px;
             overflow: hidden;
             border-radius: 20px;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
             flex: 1;
+            aspect-ratio: 1/1;
         }
 
         .carousel-wrapper {
             display: flex;
             transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            height: auto;
         }
 
         .carousel-slide {
             min-width: 100%;
-            height: 20%;
             position: relative;
             cursor: pointer;
             overflow: hidden;
@@ -348,7 +349,7 @@
 
         .carousel-slide img {
             width: 100%;
-            height: 550px;
+            height: 100%;
             object-fit: cover;
             transition: transform 0.3s ease;
         }
@@ -557,6 +558,13 @@
             transform: scale(1.1);
         }
 
+        /* Lua Mobile - Esconde a lua em telas menores */
+        @media (max-width: 768px) {
+            .moon {
+                display: none;
+            }
+        }
+
         /* Responsividade */
         @media (max-width: 768px) {
             .content {
@@ -623,8 +631,9 @@
                 padding: 25px;
             }
 
-            .carousel-slide {
-                height: 300px;
+            .carousel-container {
+                max-width: 100%;
+                aspect-ratio: 4/5;
             }
 
             .carousel-wrapper-container {
@@ -655,10 +664,6 @@
 
             .counter-display {
                 gap: 15px;
-            }
-
-            .carousel-slide {
-                height: 250px;
             }
 
             .modal-text-section {
