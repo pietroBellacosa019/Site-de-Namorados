@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Minha Princesa ❤️</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+            transition: all 0.8s ease;
+        }
+
+        ::-webkit-scrollbar {
+            width: 0px;
+            height: 0px;
+        }
+
+
+        /* Modo Noturno */
+        body.night-mode {
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+        }
+
+        /* Lua - Agora responsiva */
+        .moon {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 80px;
+            height: 80px;
+            background: #f4f4f4;
+            border-radius: 50%;
+            box-shadow: 0 0 30px rgba(244, 244, 244, 0.8);
+            opacity: 0;
+            transition: opacity 0.8s ease, transform 0.3s ease;
+            z-index: 3;
+        }
+
+        .moon.visible {
+            opacity: 1;
+        }
+
+        .moon::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            width: 8px;
+            height: 8px;
+            background: #ddd;
+            border-radius: 50%;
+        }
+
+        .moon::after {
+            content: '';
+            position: absolute;
+            top: 35px;
+            left: 45px;
+            width: 12px;
+            height: 12px;
+            background: #ddd;
+            border-radius: 50%;
+        }
+
+        /* Botão de modo */
+        .mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            border-radius: 50px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 1rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .mode-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* Container principal */
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Efeito hover elegante nas seções */
+        .section {
+            transition: all 0.6s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Título */
+        .title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .title h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3.5rem;
+            color: #8b0000;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            transition: color 0.8s ease;
+        }
+
+        body.night-mode .title h1 {
+            color: #ff6b9d;
+            text-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
+        }
+
+        .title p {
+            font-size: 1.2rem;
+            color: #666;
+            font-weight: 300;
+            transition: color 0.8s ease;
+        }
+
+        body.night-mode .title p {
+            color: #ccc;
+        }
+
+        /* Card principal */
+        .main-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+            transition: all 0.8s ease;
+        }
+
+        body.night-mode .main-card {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Layout do conteúdo */
+        .content {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        /* Seção da foto */
+        .photo-section {
+            flex: 1;
+            text-align: center;
+        }
+
+        .photo-frame {
+            width: 400px;
+            height: 500px;
+            padding-top: 10px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            margin: 0 auto;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-placeholder {
+            color: #999;
+            font-size: 1.1rem;
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Seção do texto */
+        .text-section {
+            flex: 1.2;
+        }
+
+        .love-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #444;
+            text-align: justify;
+            font-weight: 400;
+            transition: color 0.8s ease;
+        }
+
+        body.night-mode .love-text {
+            color: #ddd;
+        }
+
+        .love-text::first-letter {
+            font-size: 3rem;
+            font-family: 'Dancing Script', cursive;
+            color: #ff1493;
+            float: left;
+            line-height: 1;
+            margin-right: 8px;
+            margin-top: 4px;
+        }
+
+        /* Contador */
+        .counter-section {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+            margin-bottom: 30px;
+            transition: all 0.8s ease;
+        }
+
+        body.night-mode .counter-section {
+            background: linear-gradient(135deg, #4a4a8a, #6b6bb8);
+            box-shadow: 0 10px 25px rgba(74, 74, 138, 0.3);
+        }
+
+        .counter-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .counter-display {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .counter-item {
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .counter-number {
+            font-size: 2.5rem;
+            font-weight: 600;
+            display: block;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .counter-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Carrossel */
+        .carousel-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            transition: all 0.8s ease;
+        }
+
+        body.night-mode .carousel-section {
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .carousel-title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5rem;
+            color: #8b0000;
+            margin-bottom: 30px;
+            transition: color 0.8s ease;
+        }
+
+        body.night-mode .carousel-title {
+            color: #ff6b9d;
+            text-shadow: 0 0 20px rgba(255, 107, 157, 0.3);
+        }
+
+        .carousel-wrapper-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .carousel-container {
+            max-width: 600px;
+            max-height: 600px;
+            overflow: hidden;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            flex: 1;
+        }
+
+        .carousel-wrapper {
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .carousel-slide {
+            min-width: 100%;
+            height: 20%;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 550px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-slide:hover img {
+            transform: scale(1.05);
+        }
+
+        .slide-placeholder {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            font-size: 1.2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .carousel-slide:hover .slide-placeholder {
+            transform: scale(1.05);
+        }
+
+        /* Botões Carousel*/
+        .carousel-nav {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8b0000;
+            position: absolute;
+        }
+
+        .carousel-nav.prev {
+            left: 10px;
+        }
+
+        .carousel-nav.next {
+            right: 10px;
+        }
+
+        .carousel-nav:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        body.night-mode .carousel-nav {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ff6b9d;
+        }
+
+        body.night-mode .carousel-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(139, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+
+        .indicator.active {
+            background: #8b0000;
+            transform: scale(1.3);
+            box-shadow: 0 0 10px rgba(139, 0, 0, 0.5);
+        }
+
+        body.night-mode .indicator {
+            background: rgba(255, 107, 157, 0.3);
+        }
+
+        body.night-mode .indicator.active {
+            background: #ff6b9d;
+            box-shadow: 0 0 10px rgba(255, 107, 157, 0.5);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-content {
+            position: relative;
+            background: white;
+            margin: 3% auto;
+            width: 90%;
+            max-width: 1000px;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: modalSlideIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: flex;
+            min-height: 500px;
+        }
+
+        body.night-mode .modal-content {
+            background: #1a1a2e;
+            color: white;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-100px) scale(0.8);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-image-section {
+            flex: 1.2;
+            position: relative;
+        }
+
+        .modal-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .modal-text-section {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .modal-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: #444;
+            text-align: justify;
+        }
+
+        body.night-mode .modal-text {
+            color: #ddd;
+        }
+
+        .modal-text::first-letter {
+            font-size: 2.5rem;
+            font-family: 'Dancing Script', cursive;
+            color: #ff1493;
+            float: left;
+            line-height: 1;
+            margin-right: 8px;
+            margin-top: 4px;
+        }
+
+        body.night-mode .modal-text::first-letter {
+            color: #ff6b9d;
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close:hover {
+            background: rgba(255, 107, 107, 0.8);
+            transform: scale(1.1);
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .photo-frame {
+                width: 250px;
+                height: 320px;
+            }
+
+            .title h1 {
+                font-size: 2.5rem;
+            }
+
+            .main-card,
+            .carousel-section {
+                padding: 25px;
+            }
+
+            .counter-display {
+                gap: 20px;
+            }
+
+            .counter-number {
+                font-size: 2rem;
+            }
+
+            /* Lua ajustada para mobile */
+            .moon {
+                top: 15px;
+                left: 15px;
+                width: 60px;
+                height: 60px;
+            }
+
+            .moon::before {
+                top: 10px;
+                left: 15px;
+                width: 6px;
+                height: 6px;
+            }
+
+            .moon::after {
+                top: 25px;
+                left: 35px;
+                width: 9px;
+                height: 9px;
+            }
+
+            .mode-toggle {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+
+            .modal-content {
+                flex-direction: column;
+                width: 95%;
+                margin: 5% auto;
+            }
+
+            .modal-text-section {
+                padding: 25px;
+            }
+
+            .carousel-slide {
+                height: 300px;
+            }
+
+            .carousel-wrapper-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .carousel-nav {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .photo-frame {
+                width: 200px;
+                height: 260px;
+            }
+
+            .love-text {
+                font-size: 1rem;
+            }
+
+            .counter-display {
+                gap: 15px;
+            }
+
+            .carousel-slide {
+                height: 250px;
+            }
+
+            .modal-text-section {
+                padding: 20px;
+            }
+
+            .modal-text {
+                font-size: 1rem;
+            }
+
+            .carousel-wrapper-container {
+                gap: 15px;
+            }
+
+            /* Lua ainda menor para telas muito pequenas */
+            .moon {
+                width: 50px;
+                height: 50px;
+            }
+
+            .moon::before {
+                top: 8px;
+                left: 12px;
+                width: 5px;
+                height: 5px;
+            }
+
+            .moon::after {
+                top: 20px;
+                left: 28px;
+                width: 7px;
+                height: 7px;
+            }
+
+            .carousel-nav {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            /* Lua maior para telas grandes */
+            .moon {
+                width: 120px;
+                height: 120px;
+            }
+
+            .moon::before {
+                top: 22px;
+                left: 30px;
+                width: 12px;
+                height: 12px;
+            }
+
+            .moon::after {
+                top: 52px;
+                left: 67px;
+                width: 18px;
+                height: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Botão de modo -->
+    <button class="mode-toggle" onclick="toggleMode()">🌙</button>
+
+    <!-- Lua -->
+    <div class="moon" id="moon"></div>
+
+    <!-- Canvas para chuva de corações -->
+    <canvas id="heartsCanvas" style="position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none;"></canvas>
+
+    <!-- Canvas para estrelas -->
+    <canvas id="starsCanvas"
+        style="position: fixed; top: 0; left: 0; z-index: 1; pointer-events: none; opacity: 0;"></canvas>
+
+    <!-- Conteúdo principal -->
+    <div class="container">
+        <div class="title section">
+            <h1>Para Minha Princesa</h1>
+            <p>Com todo meu amor ❤️</p>
+        </div>
+
+        <div class="main-card section">
+            <div class="content">
+                <div class="photo-section">
+                    <div class="photo-frame">
+                        <div class="photo-placeholder">
+                            <img src="assets/Foto-Principal.jpg" alt="Nossa Foto">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-section">
+                    <p class="love-text">
+                        Minha princesa nada mais justo do que eu como um garoto de programa fazer este presente para
+                        você é algo simple mas eu gostaria de fazer isso, porque você é a pessoinha mais incrivel e
+                        perfeita deste universo todinho eu te amo desde a ponta de seu fio de cabelo ate a unha do seu
+                        pezinho, você me fez descubrir coisas novas que nunca imaginaria poder fazer e eu não acha que
+                        encontraria algem assim perfeita pra mim.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="counter-section section">
+            <h2 class="counter-title">Nosso Tempo Juntos</h2>
+            <div class="counter-display">
+                <div class="counter-item">
+                    <span class="counter-number" id="years">0</span>
+                    <span class="counter-label">Anos</span>
+                </div>
+                <div class="counter-item">
+                    <span class="counter-number" id="months">0</span>
+                    <span class="counter-label">Meses</span>
+                </div>
+                <div class="counter-item">
+                    <span class="counter-number" id="days">0</span>
+                    <span class="counter-label">Dias</span>
+                </div>
+                <div class="counter-item">
+                    <span class="counter-number" id="hours">0</span>
+                    <span class="counter-label">Horas</span>
+                </div>
+                <div class="counter-item">
+                    <span class="counter-number" id="minutes">0</span>
+                    <span class="counter-label">Minutos</span>
+                </div>
+                <div class="counter-item">
+                    <span class="counter-number" id="seconds">0</span>
+                    <span class="counter-label">Segundos</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carrossel -->
+        <div class="carousel-section section">
+            <h2 class="carousel-title">Nossas Memórias</h2>
+
+            <div class="carousel-wrapper-container">
+                <button class="carousel-nav prev" onclick="prevSlide()">‹</button>
+
+                <div class="carousel-container">
+                    <div class="carousel-wrapper" id="carouselWrapper">
+                        <div class="carousel-slide" onclick="openModal(0)">
+                            <div class="slide-placeholder">
+                                <img src="assets/Carrosel-1.jpg" alt="Memória 1">
+                            </div>
+                        </div>
+                        <div class="carousel-slide" onclick="openModal(1)">
+                            <div class="slide-placeholder">
+                                <img src="assets/Carrosel-2.jpg" alt="Memória 2">
+                            </div>
+                        </div>
+                        <div class="carousel-slide" onclick="openModal(2)">
+                            <div class="slide-placeholder">
+                                <img src="assets/Carrosel-3.jpg" alt="Memória 3">
+                            </div>
+                        </div>
+                        <div class="carousel-slide" onclick="openModal(3)">
+                            <div class="slide-placeholder">
+                                <img src="assets/Carrosel-4.jpg" alt="Memória 4" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-nav next" onclick="nextSlide()">›</button>
+            </div>
+
+            <div class="carousel-indicators">
+                <div class="indicator active" onclick="goToSlide(0)"></div>
+                <div class="indicator" onclick="goToSlide(1)"></div>
+                <div class="indicator" onclick="goToSlide(2)"></div>
+                <div class="indicator" onclick="goToSlide(3)"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="photoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div class="modal-image-section">
+                <img id="modalImage" class="modal-image" src="/placeholder.svg" alt="">
+            </div>
+            <div class="modal-text-section">
+                <p id="modalText" class="modal-text"></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isNightMode = false;
+        let currentSlide = 0;
+
+        // Dados das fotos
+        const photos = [
+            {
+                src: 'assets/Carrosel-1.jpg',
+                text: 'Esse dia foi muito bom e tambem umas das fotos mais legais nosssa, para uma viajem que não ia dar mais certo e você ficou chateada, conseguimos fazer varias coisas juntos e ate mesmo dormir no mesmo quarto, no parque alguem não estava tão animada mas depois fomos nos divertindo e foi muito bom pena que a gente não ficou bom né?'
+            },
+            {
+                src: 'assets/Carrosel-2.jpg',
+                text: 'A maior e mais planejada surpresa que eu fiz, você não essperava por nada disso achou que eu não ia dar conta nem de fazer uma janta para você mas no final eu te surpreendi com uma janta "excelente" com um "Vinho" e a nossa aliança, foi um dos dias mais emocionantes e memoraveis para mim.'
+            },
+            {
+                src: 'assets/Carrosel-3.jpg',
+                text: 'O dia que você conseguiu uma conquista e conseguiu passar de uma faze de sua vida que acompanhei, onde você teve muitos momentos dificeis e nervosos, ate mesmo de raiva, mas no final valeu apena, agora estudamos no mesmo lugar e tambem você estava tão maravilhosa naquele vestido.'
+            },
+             {
+                src: 'assets/Carrosel-4.jpg',
+                text: 'Primeira vez que fui a sua casa, uma missão difícil mas muito valiosa e recompensadora, porque se não fosse essa atitude acho que poderia ter sido muito pior e mais difícil nossa jornada, eu lembro de cada detalhe cada coisa que aconteceu, jogo de futebol e placar, ganhador do GP da formula 1 ate mesmo o filme que tentamos assistir, tudo isso porque eu te amo muito minha princesa.'
+            }
+        ];
+
+        // Canvas
+        const heartsCanvas = document.getElementById('heartsCanvas');
+        const heartsCtx = heartsCanvas.getContext('2d');
+        const starsCanvas = document.getElementById('starsCanvas');
+        const starsCtx = starsCanvas.getContext('2d');
+
+        let width = heartsCanvas.width = starsCanvas.width = window.innerWidth;
+        let height = heartsCanvas.height = starsCanvas.height = window.innerHeight;
+
+        const hearts = Array(100).fill().map(() => ({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            size: Math.random() * 20 + 10,
+            speed: Math.random() * 1 + 0.5
+        }));
+
+        const stars = Array(80).fill().map(() => ({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            size: Math.random() * 3 + 1,
+            speed: Math.random() * 0.5 + 0.2,
+            opacity: Math.random() * 0.8 + 0.2
+        }));
+
+        function drawHearts() {
+            heartsCtx.clearRect(0, 0, width, height);
+            heartsCtx.fillStyle = 'rgba(255,105,135,0.7)';
+            hearts.forEach(h => {
+                heartsCtx.beginPath();
+                heartsCtx.moveTo(h.x, h.y);
+                heartsCtx.bezierCurveTo(h.x + h.size / 2, h.y - h.size / 2, h.x + h.size * 1.5, h.y + h.size / 2, h.x, h.y + h.size);
+                heartsCtx.bezierCurveTo(h.x - h.size * 1.5, h.y + h.size / 2, h.x - h.size / 2, h.y - h.size / 2, h.x, h.y);
+                heartsCtx.fill();
+                h.y += h.speed;
+                if (h.y > height) h.y = -10;
+            });
+            requestAnimationFrame(drawHearts);
+        }
+
+        function drawStars() {
+            starsCtx.clearRect(0, 0, width, height);
+            stars.forEach(s => {
+                starsCtx.fillStyle = `rgba(255,255,255,${s.opacity})`;
+                starsCtx.beginPath();
+                starsCtx.arc(s.x, s.y, s.size, 0, Math.PI * 2);
+                starsCtx.fill();
+
+                starsCtx.strokeStyle = `rgba(255,255,255,${s.opacity * 0.5})`;
+                starsCtx.lineWidth = 1;
+                starsCtx.beginPath();
+                starsCtx.moveTo(s.x - s.size * 2, s.y);
+                starsCtx.lineTo(s.x + s.size * 2, s.y);
+                starsCtx.moveTo(s.x, s.y - s.size * 2);
+                starsCtx.lineTo(s.x, s.y + s.size * 2);
+                starsCtx.stroke();
+
+                s.y += s.speed;
+                if (s.y > height) {
+                    s.y = -10;
+                    s.x = Math.random() * width;
+                }
+            });
+            requestAnimationFrame(drawStars);
+        }
+
+        // Redimensionar canvas
+        window.addEventListener('resize', () => {
+            width = heartsCanvas.width = starsCanvas.width = window.innerWidth;
+            height = heartsCanvas.height = starsCanvas.height = window.innerHeight;
+        });
+
+        // Alternar modo
+        function toggleMode() {
+            isNightMode = !isNightMode;
+            const body = document.body;
+            const moon = document.getElementById('moon');
+            const starsCanvas = document.getElementById('starsCanvas');
+            const button = document.querySelector('.mode-toggle');
+
+            if (isNightMode) {
+                body.classList.add('night-mode');
+                moon.classList.add('visible');
+                starsCanvas.style.opacity = '1';
+                button.textContent = '☀️';
+            } else {
+                body.classList.remove('night-mode');
+                moon.classList.remove('visible');
+                starsCanvas.style.opacity = '0';
+                button.textContent = '🌙';
+            }
+        }
+
+        // Carrossel
+        function updateCarousel() {
+            const wrapper = document.getElementById('carouselWrapper');
+            const indicators = document.querySelectorAll('.indicator');
+
+            wrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+            indicators.forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentSlide);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % photos.length;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + photos.length) % photos.length;
+            updateCarousel();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+
+        // Modal
+        function openModal(slideIndex) {
+            const modal = document.getElementById('photoModal');
+            const modalImage = document.getElementById('modalImage');
+            const modalText = document.getElementById('modalText');
+
+            modalImage.src = photos[slideIndex].src;
+            modalText.textContent = photos[slideIndex].text;
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('photoModal').style.display = 'none';
+        }
+
+        // Fechar modal clicando fora
+        window.onclick = function (event) {
+            const modal = document.getElementById('photoModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Contador de tempo
+        function updateCounter() {
+            const startDate = new Date('2024-05-05T14:00:00');
+            const now = new Date();
+
+            // Calcula a diferença total em milissegundos
+            const diff = now - startDate;
+
+            // Calcula os anos completos
+            let years = now.getFullYear() - startDate.getFullYear();
+            let startDateThisYear = new Date(startDate);
+            startDateThisYear.setFullYear(now.getFullYear());
+
+            // Ajusta se o aniversário ainda não ocorreu este ano
+            if (now < startDateThisYear) {
+                years--;
+                startDateThisYear.setFullYear(now.getFullYear() - 1);
+            }
+
+            // Calcula os meses completos desde o último aniversário
+            let months = now.getMonth() - startDateThisYear.getMonth();
+            if (months < 0) {
+                months += 12;
+            }
+
+            // Calcula os dias completos desde o início do mês atual
+            let tempDate = new Date(startDateThisYear);
+            tempDate.setMonth(tempDate.getMonth() + months);
+
+            let days = now.getDate() - tempDate.getDate();
+            if (days < 0) {
+                // Vai para o mês anterior para calcular os dias corretamente
+                tempDate.setMonth(tempDate.getMonth() - 1);
+                days = Math.floor((now - tempDate) / (1000 * 60 * 60 * 24));
+            }
+
+            // Calcula horas, minutos e segundos do dia atual
+            const hours = Math.floor(diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60);
+            const minutes = Math.floor(diff % (1000 * 60 * 60)) / (1000 * 60);
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('years').textContent = years;
+            document.getElementById('months').textContent = months;
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = Math.floor(hours);
+            document.getElementById('minutes').textContent = Math.floor(minutes);
+            document.getElementById('seconds').textContent = seconds;
+        }
+
+        // Atualizar contador a cada segundo
+        setInterval(updateCounter, 1000);
+        updateCounter(); // Executar imediatamente
+
+        // Inicializar
+        drawHearts();
+        drawStars();
+        setInterval(updateCounter, 1000);
+        setInterval(nextSlide, 5000); // Auto-slide a cada 5 segundos
+        updateCounter();
+    </script>
+</body>
+</html>
